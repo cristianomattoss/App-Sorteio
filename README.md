@@ -28,6 +28,6 @@ Nesta tela o usuário adicionará os nomes participantes do sorteio.<br>
 ### Tela com o nome sorteado
 Tela exibida ao usuário após clicar em 'SORTEAR' na tela onde os nomes foram adicionados.
 Esta tela exibi o nome sorteado.<br>
-<img src="images/nome_sorteado.png.png" width="400">
+<img src="images/nome_sorteado.png" width="400">
 
 
