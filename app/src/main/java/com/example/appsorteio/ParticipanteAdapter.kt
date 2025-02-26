@@ -1,13 +1,13 @@
 package com.example.appsorteio
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.appsorteio.databinding.CardViewBinding
 
-class ParticipanteAdapter () : Adapter<ParticipanteAdapter.ParticipanteViewHolder>() {
+class ParticipanteAdapter : Adapter<ParticipanteAdapter.ParticipanteViewHolder>() {
     val listaParticipantes = mutableListOf<ListaParticipante>()
 
     fun adicionarNome(nome: String) {
@@ -15,12 +15,19 @@ class ParticipanteAdapter () : Adapter<ParticipanteAdapter.ParticipanteViewHolde
         notifyItemInserted(listaParticipantes.size - 1)
     }
 
-    inner class ParticipanteViewHolder(
-        itemView: View
-    ) : ViewHolder( itemView ) {
-        val textNome: TextView = itemView.findViewById(R.id.text_nome)
+    private fun removerNome(nomeParticipante: String) {
+        val posicao = listaParticipantes.indexOfFirst { it.nome == nomeParticipante }
+
+        if (posicao != -1) {
+            listaParticipantes.removeAt(posicao) // Remove o item da lista
+            notifyItemRemoved(posicao) // Notifica o RecyclerView sobre a remoção
+        }
 
     }
+
+    inner class ParticipanteViewHolder(
+        val binding: CardViewBinding
+    ) : ViewHolder( binding.root )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticipanteViewHolder {
 
@@ -28,8 +35,8 @@ class ParticipanteAdapter () : Adapter<ParticipanteAdapter.ParticipanteViewHolde
             parent.context
         )
 
-        val itemView = layoutInflater.inflate(
-            R.layout.view, parent, false
+        val itemView = CardViewBinding.inflate(
+            layoutInflater, parent, false
         )
 
         return ParticipanteViewHolder( itemView )
@@ -38,7 +45,21 @@ class ParticipanteAdapter () : Adapter<ParticipanteAdapter.ParticipanteViewHolde
     override fun onBindViewHolder(holder: ParticipanteViewHolder, position: Int) {
 
         val participante = listaParticipantes[position]
-        holder.textNome.text = participante.nome
+        holder.binding.textCardNome.text = participante.nome
+
+        holder.binding.ivCardRemover.setOnClickListener {
+            AlertDialog.Builder(holder.binding.ivCardRemover.context)
+                .setTitle("Confirmar exclusão do item!")
+                .setMessage("Tem certeza que deseja remover?")
+                .setNegativeButton("Não") { _, _ ->
+                }
+                .setPositiveButton("Sim"){_, _ ->
+                    removerNome(holder.binding.textCardNome.text.toString())
+                }
+                .setCancelable(false)
+                .create()
+                .show()
+        }
     }
 
     override fun getItemCount(): Int {

@@ -1,22 +1,27 @@
 package com.example.appsorteio
 
 import android.os.Bundle
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.appsorteio.databinding.ActivityNomeSorteadoBinding
 
 class NomeSorteadoActivity : AppCompatActivity() {
-    private lateinit var nomeSorteado: TextView
+
+    private val binding by lazy {
+        ActivityNomeSorteadoBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nome_sorteado)
+        setContentView( binding.root )
+
+        inicializarToolbar()
 
         val nome = intent.getStringExtra("nome")
-        val nomeSorteado: TextView = findViewById(R.id.text_nome_sorteado)
+        binding.textNomeSorteado.text = nome
+    }
 
-        nomeSorteado.text = nome
+    private fun inicializarToolbar() {
+        setSupportActionBar(binding.includeToolbarSorteado.materialToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }

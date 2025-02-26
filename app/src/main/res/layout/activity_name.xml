@@ -5,98 +5,56 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fundo"
     tools:context=".NameActivity">
 
-    <Button
-        android:id="@+id/btn_adicionar"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/includeToolbarNome"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="+"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/text_input_name"
-        app:layout_constraintEnd_toStartOf="@+id/text_input_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_input_name" />
-
-    <Button
-        android:id="@+id/btn_remover"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="-"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/text_output_name"
-        app:layout_constraintEnd_toStartOf="@+id/text_output_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_output_name" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_name"
-        android:layout_width="220dp"
+        android:id="@+id/textInputNome"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btnAdicionar"
+        app:layout_constraintTop_toBottomOf="@+id/includeToolbarNome">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/adicionar_nome"
+            android:id="@+id/editAdicionarNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gray"
             android:hint="Adicione um nome"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_output_name"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/text_input_name"
-        app:layout_constraintStart_toStartOf="@+id/text_input_name"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_name">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/remover_nome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Remova um nome" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_lista"
+        android:id="@+id/rvLista"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_sorteio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:listitem="@layout/view" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="LISTA"
-        android:textColor="@color/blue_2"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSortear"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_output_name" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputNome"
+        tools:listitem="@layout/card_view" />
 
     <Button
-        android:id="@+id/btn_sorteio"
+        android:id="@+id/btnSortear"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -104,8 +62,23 @@
         android:layout_marginBottom="16dp"
         android:text="Sortear"
         android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnAdicionar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/green_1"
+        android:tint="@color/green_3"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputNome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textInputNome"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,55 +2,39 @@ package com.example.appsorteio
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appsorteio.databinding.ActivityNameBinding
 import kotlin.random.Random
 
 class NameActivity : AppCompatActivity() {
-    private lateinit var btnAdicionar: Button
-    private lateinit var btnRemover: Button
-    private lateinit var adicionarNome : EditText
-    private lateinit var removerNome: EditText
-    private lateinit var rvLista: RecyclerView
-    private lateinit var btnSortear: Button
-    private lateinit var participante: ParticipanteAdapter
 
+    private val binding by lazy {
+        ActivityNameBinding.inflate(layoutInflater)
+    }
+
+    private lateinit var participante: ParticipanteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_name)
-        //val lista = mutableListOf<String>()
+        setContentView( binding.root )
 
-        //InicializandoComponentes
-        btnAdicionar = findViewById(R.id.btn_adicionar)
-        adicionarNome = findViewById(R.id.adicionar_nome)
-        rvLista = findViewById(R.id.rv_lista)
-        btnSortear = findViewById(R.id.btn_sorteio)
+        inicializarToolbar()
 
-        // Inicialização do Adapter e configuração do RecyclerView
+        //Inicialização do Adapter e configuração do RecyclerView
         participante = ParticipanteAdapter()
-        rvLista.adapter = participante
-        rvLista.layoutManager = LinearLayoutManager(this)
+        binding.rvLista.adapter = participante
+        binding.rvLista.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        rvLista.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                RecyclerView.VERTICAL
-            )
-        )
-
-        // Adicionar nome a lista
-        btnAdicionar.setOnClickListener {
-            val nomeAdicionado = adicionarNome.text.toString()
+        //Adicionar nome a lista
+        binding.btnAdicionar.setOnClickListener {
+            val nomeAdicionado = binding.editAdicionarNome.text.toString()
             if (nomeAdicionado.isNotEmpty()) {
-                //lista.add(nomeAdicionado)
                 participante.adicionarNome(nomeAdicionado)
-                adicionarNome.text.clear()
+                binding.editAdicionarNome.text?.clear()
             }
             else {
                 Toast.makeText(this, "Insira um nome!", Toast.LENGTH_LONG).show()
@@ -58,20 +42,44 @@ class NameActivity : AppCompatActivity() {
 
         }
 
-        btnSortear.setOnClickListener {
+        //Sortear nome da lista
+        binding.btnSortear.setOnClickListener {
             if(participante.listaParticipantes.isNotEmpty()) {
-                val numeroAleatorio = Random.nextInt((participante.listaParticipantes.size).toInt())
-                val nomeSorteado = participante.listaParticipantes[numeroAleatorio].nome
-
-                val intent = Intent(this, NomeSorteadoActivity::class.java).apply {
-                    putExtra("nome", nomeSorteado)
-                }
-                startActivity(intent)
+                alertaRealizarSorteio()
             }
             else {
                 Toast.makeText(this, "A lista está vazia!", Toast.LENGTH_LONG).show()
             }
         }
 
+    }
+
+    private fun inicializarToolbar() {
+        setSupportActionBar(binding.includeToolbarNome.materialToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun alertaRealizarSorteio() {
+        AlertDialog.Builder(this)
+            .setTitle("Sorteio da lista!")
+            .setMessage("Tem certeza que deseja sortear?")
+            .setNegativeButton("Não") { _, _ -> }
+            .setPositiveButton("Sim"){_, _ ->
+                realizarSorteio()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
+
+    }
+
+    private fun realizarSorteio() {
+        val numeroAleatorio = Random.nextInt((participante.listaParticipantes.size))
+        val nomeSorteado = participante.listaParticipantes[numeroAleatorio].nome
+
+        val intent = Intent(this, NomeSorteadoActivity::class.java).apply {
+            putExtra("nome", nomeSorteado)
+        }
+        startActivity(intent)
     }
 }

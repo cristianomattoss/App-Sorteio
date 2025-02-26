@@ -5,44 +5,58 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/capa"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_numero"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/includeToolbar"
+        layout="@layout/main_toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:text="Sortear número"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_nome"
+        android:id="@+id/btnNumero"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Sortear número"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnNome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/btnNome"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Sortear nome"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_numero" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:text="O que você deseja sortear?"
-        android:textAlignment="center"
-        android:textColor="@color/blue_2"
-        android:textSize="34sp"
+        android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnNumero"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btnNumero"
+        app:layout_constraintTop_toBottomOf="@+id/btnNumero" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="312dp"
+        android:layout_height="113dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumero"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/sorteio" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

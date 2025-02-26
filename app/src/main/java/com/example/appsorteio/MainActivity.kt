@@ -2,27 +2,31 @@ package com.example.appsorteio
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.appsorteio.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var BtnNumero: Button
-    private lateinit var BtnNome: Button
+
+    private val binding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView( binding.root )
 
-        BtnNumero = findViewById<Button>(R.id.btn_numero)
-        BtnNome = findViewById<Button>(R.id.btn_nome)
+        inicializarTollbar()
 
-        BtnNumero.setOnClickListener {
+        binding.btnNumero.setOnClickListener {
             startActivity(Intent(this, NumberActivity::class.java))
         }
 
-        BtnNome.setOnClickListener {
+        binding.btnNome.setOnClickListener {
             startActivity(Intent(this, NameActivity::class.java))
         }
+    }
 
+    private fun inicializarTollbar() {
+        setSupportActionBar(binding.includeToolbar.materialToolbarmMain)
     }
 }
